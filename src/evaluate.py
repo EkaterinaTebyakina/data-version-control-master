@@ -10,12 +10,21 @@ from train import load_data
 def main(repo_path):
     test_csv_path = repo_path / "data/prepared/test.csv"
     test_data, labels = load_data(test_csv_path)
-    model = load(repo_path / "model/model.joblib")
-    predictions = model.predict(test_data)
-    accuracy = accuracy_score(labels, predictions)
-    metrics = {"accuracy": accuracy}
-    accuracy_path = repo_path / "metrics/accuracy.json"
-    accuracy_path.write_text(json.dumps(metrics))
+
+    models = [
+        'etc',
+        'rfc',
+        'sgd',
+    ]
+
+    for modelName in models:
+        model = load(repo_path / f"models/{modelName}.joblib")
+
+        predictions = model.predict(test_data)
+        accuracy = accuracy_score(labels, predictions)
+        metrics = {"accuracy": accuracy}
+        accuracy_path = repo_path / f"metrics/{modelName}_accuracy.json"
+        accuracy_path.write_text(json.dumps(metrics))
 
 
 if __name__ == "__main__":

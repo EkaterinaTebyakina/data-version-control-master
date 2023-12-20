@@ -5,7 +5,13 @@ import numpy as np
 import pandas as pd
 from skimage.io import imread_collection
 from skimage.transform import resize
+
 from sklearn.linear_model import SGDClassifier
+
+from sklearn.ensemble import RandomForestClassifier
+
+from sklearn.ensemble import ExtraTreesClassifier
+
 
 
 def load_images(data_frame, column_name):
@@ -37,9 +43,18 @@ def load_data(data_path):
 def main(repo_path):
     train_csv_path = repo_path / "data/prepared/train.csv"
     train_data, labels = load_data(train_csv_path)
-    sgd = SGDClassifier(max_iter=10)
-    trained_model = sgd.fit(train_data, labels)
-    dump(trained_model, repo_path / "model/model.joblib")
+
+
+    models = {
+        'etc': ExtraTreesClassifier(n_estimators=15),
+        'rfc': RandomForestClassifier(min_samples_leaf=20),
+        'sgd': SGDClassifier(max_iter=15),
+    }
+
+    for name, model in models.items():
+        trained_model = model.fit(train_data, labels)
+        dump(trained_model, repo_path / f"models/{name}.joblib")
+
 
 
 if __name__ == "__main__":
