@@ -1,0 +1,5 @@
+outs:
+- md5: f5f5b60c5574c7648114aed39196a261
+  size: 24012668
+  hash: md5
+  path: sgd.joblib

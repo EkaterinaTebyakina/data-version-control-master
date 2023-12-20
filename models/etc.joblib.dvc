@@ -1,0 +1,5 @@
+outs:
+- md5: a3f85547fde0a5518a7a478235deeda9
+  size: 226302777
+  hash: md5
+  path: etc.joblib
